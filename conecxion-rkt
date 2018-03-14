@@ -1,0 +1,7 @@
+#lang racket
+(require db)
+(define conectar(mysql-connect #:server "localhost"
+                 #:port 3306
+                 #:database "CRECIMIENTONI"
+                 #:user "root"
+                 #:password "IngePip3"))

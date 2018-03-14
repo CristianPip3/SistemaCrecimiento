@@ -1,0 +1,27 @@
+#lang racket/gui
+(require racket/gui/base)
+
+
+ (define frame (new frame% [label "Example"]))
+  
+  ; Make a static text message in the frame
+  (define msg (new message% [parent frame]
+                            [label "No events so far..."]))
+(define frame1 (new frame% [label "Example"]))
+
+  
+  ; Make a canvas that handles events in the frame
+  
+ (define panel (new horizontal-panel% [parent frame]))
+  (new button% [parent panel]
+               [label "Left"]
+               [callback (lambda (button event)
+                           (send frame1 show #t))])
+  (new button% [parent panel]
+               [label "Right"]
+               [callback (lambda (button event)
+                           (send msg set-label "Right click"))])
+
+  
+  ; Show the frame by calling its show method
+  (send frame show #t)

@@ -1,0 +1,52 @@
+#lang racket/gui
+(require racket/gui/base)
+(require db)
+
+
+ (define frame (new frame% [label "Example"]))
+  
+  ; Make a static text message in the frame
+  (define msg (new message% [parent frame]
+                            [label "No events so far..."]))
+(define frame1 (new frame% [label "Example"]))
+
+  
+  ; Make a canvas that handles events in the frame
+  
+ (define panel (new horizontal-panel% [parent frame]))
+  (new button% [parent panel]
+               [label "Left"]
+               [callback (lambda (button event)
+                           (send dialog show #t))])
+  (new button% [parent frame1]
+               [label "Right"]
+               [callback (lambda (button event)
+                           (send msg set-label "Right click"))])
+
+; Create a dialog
+  (define dialog (instantiate dialog% ("Example")))
+  
+  ; Add a text field to the dialog
+  (new text-field% [parent dialog] [label "Your name"])
+  
+  ; Add a horizontal panel to the dialog, with centering for buttons
+  (define panel1 (new horizontal-panel% [parent dialog]
+                                       [alignment '(center center)]))
+  
+  ; Add Cancel and Ok buttons to the horizontal panel
+  (new button% [parent panel1] [label "Cancel"])
+  (new button% [parent panel1] [label "Ok"])
+  (when (system-position-ok-before-cancel?)
+    (send panel change-children reverse))
+  (define c     (mysql-connect #:server "localhost"
+                 #:port 3306
+                 #:database "CENTRO_MEDICO"
+                 #:user "root"
+                 #:password "IngePip3")
+    )
+  
+
+  
+  
+  ; Show the frame by calling its show method
+  (send frame show #t)
